@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Blog{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}
+          <h1>Accueil de votre Blog !</h1>
+{{ form_start(form) }}
+<br><br>
+    {{ form_row(form.titre) }}
+<br><br>
+    {{ form_row(form.contenu) }}
+<br><br>
+    {{ form_row(form.auteur) }}
+<br><br>
+
+<input type="submit" value="Enregistrer l'article" />
+
+{{ form_end(form) }}
+<br><br>
+<a href="{{ path ('list_articles') }}">Voir les articles</a>
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

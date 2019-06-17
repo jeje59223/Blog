@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}
+
+        <h1>L'article {{ article.getId() }} est sélectionné :</h1>
+
+              <h1>{{ article.getTitre()|upper }}</h1>
+              Publié le : <time datetime="{{ article.createdAt|date('Y-m-d H:i:s') }}">
+                {{ article.createdAt|date('d/m/Y H:i') }}
+              </time>
+              <p>{{ article.getContenu() }}</p>
+              <p>Auteur : {{ article.getAuteur() }}</p>
+              <br><br>
+              <a href="{{ path ('accueil') }}">Accueil - </a>
+              <a href="{{ path('article_edit', {'id':article.id} ) }}">Modifier l'article - </a>
+              <a href="{{ path('article_remove_id', {'id':article.id} ) }}">Supprimer l'article</a>
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

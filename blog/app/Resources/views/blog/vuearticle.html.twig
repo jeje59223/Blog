@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}
+            {% for key,article in articles %}
+
+                  <h1>{{ article.getTitre()| upper }}</h1>
+                  <td>{{ article.getContenu() }}</td>
+                  <br><br>
+                  <td>Auteur : {{ article.getAuteur() }}</td>
+
+                  <br><br>
+                <a href="{{ path('article_view_url', {'id':article.id} ) }}">Consulter l'article - </a>
+                <a href="{{ path ('accueil') }}">Accueil</a>
+
+
+            {% endfor %}
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
