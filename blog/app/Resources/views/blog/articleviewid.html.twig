@@ -3,7 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
@@ -13,7 +15,7 @@
 
               <h1>{{ article.getTitre()|upper }}</h1>
               Publié le : <time datetime="{{ article.createdAt|date('Y-m-d H:i:s') }}">
-                {{ article.createdAt|date('d/m/Y H:i') }}
+                {{ article.createdAt|date('d/m/Y \à H:i') }}
               </time>
               <p>{{ article.getContenu() }}</p>
               <p>Auteur : {{ article.getAuteur() }}</p>

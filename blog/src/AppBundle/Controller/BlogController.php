@@ -39,14 +39,26 @@ class BlogController extends Controller
     /**
      * @Route("list", name="list_articles")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
+
       $em = $this->getDoctrine()->getManager();
 
       $articles = $em->getRepository('AppBundle:News')->findAll();
 
+      /**
+       * @var $paginator\Knp\Component\Pager\Paginator
+       */
+      $paginator = $this->get('knp_paginator');
+      $result = $paginator->paginate(
+        $articles,
+        $request->query->getInt('page', 1),
+        $request->query->getInt('limit', 2)
+
+      );
+
       $response = $this->render('blog/vuearticle.html.twig', [
-        'articles' => $articles,
+        'articles' => $result,
       ]);
       return $response;
     }
