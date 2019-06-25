@@ -9,6 +9,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\News;
 use AppBundle\Form\NewsType;
+use AppBundle\Entity\Comment;
+use AppBundle\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BlogController extends Controller
@@ -54,7 +56,6 @@ class BlogController extends Controller
         $articles,
         $request->query->getInt('page', 1),
         $request->query->getInt('limit', 2)
-
       );
 
       $response = $this->render('blog/vuearticle.html.twig', [
@@ -64,7 +65,7 @@ class BlogController extends Controller
     }
 
     /**
-      * @Route("article/view/{id}", name="article_view_url")
+      * @Route("article/view/{id}", name="article_view_url", requirements={"id": "\d+"})
       */
     public function viewUrlAction($id)
     {
@@ -72,9 +73,13 @@ class BlogController extends Controller
       $em = $this->getDoctrine()->getManager();
     // récupérer un article
       $article = $em->getRepository("AppBundle:News")->find($id);
-
+    // récupérer les commentaires de l'article id
+      $commentaires = $em->getRepository("AppBundle:Comment")
+      ->findByNews($article->getId());
+    // afficher les articles et les commentaires
       $response = $this->render('blog/articleviewid.html.twig', [
           'article' => $article,
+          'comments' => $commentaires,
       ]);
         return $response;
     }
@@ -133,6 +138,33 @@ public function removeIdAction($id)
     // apres suppression rediriger le visiteur sur accueilview
         return $this->redirectToRoute('accueil');
     }
+}
+/**
+ * @Route("/formcomment", name="formulaire_commentaires")
+ */
+public function FormInsertAction(Request $request)
+{
+  
+  $form2 = $this->createForm(CommentType::class);
 
+  $em = $this->getDoctrine()->getManager();
+
+
+  $form2->handleRequest($request);
+
+  if ($form2->isSubmitted() && $form2->isValid()) {
+    $commentaire = $form2->getData();
+
+    $em->persist($commentaire);
+    $em->flush();
+
+    return $this->redirectToRoute('accueil');
+
+  }
+
+  $response = $this->render('blog/insertcomment.html.twig', [
+    'form2' => $form2->createView(),
+  ]);
+  return $response;
 }
 }

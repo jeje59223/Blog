@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -10,19 +12,44 @@
     </head>
     <body>
         {% block body %}
-
+        <nav class="navbar navbar-dark bg-dark">
+          <a class="navbar-brand" href="{{ path ('accueil') }}">Accueil</a>
+          <a class="navbar-brand" href="{{ path('article_edit', {'id':article.id} ) }}">Modifier l'article</a>
+          <a class="navbar-brand" href="{{ path('article_remove_id', {'id':article.id} ) }}">Supprimer l'article</a>
+          <a class="navbar-brand" href="{{ path ('list_articles') }}">Retour aux articles</a>
+        </nav>
+        <br><br>
         <h1>L'article {{ article.getId() }} est sélectionné :</h1>
-
-              <h1>{{ article.getTitre()|upper }}</h1>
+              <br>
+              <div class="article_id">
+          <h1>{{ article.getTitre()|upper }}</h1>
+              <br>
               Publié le : <time datetime="{{ article.createdAt|date('Y-m-d H:i:s') }}">
                 {{ article.createdAt|date('d/m/Y \à H:i') }}
               </time>
+              <br><br>
               <p>{{ article.getContenu() }}</p>
               <p>Auteur : {{ article.getAuteur() }}</p>
-              <br><br>
-              <a href="{{ path ('accueil') }}">Accueil - </a>
-              <a href="{{ path('article_edit', {'id':article.id} ) }}">Modifier l'article - </a>
-              <a href="{{ path('article_remove_id', {'id':article.id} ) }}">Supprimer l'article</a>
+
+              <a href="{{ path ('formulaire_commentaires') }}">Commenter l'article</a>
+              </div>
+              <br>
+          <h2 style="text-align: right; margin-right: 6%;">Vos commentaires :</h2>
+          <div class="" style="border:2px solid black; border-radius: 30px; margin-top: 3%;
+          padding-top: 3%; margin-left: 60%; margin-right: 1%; padding-bottom: 3%;">
+
+              {% for comment in comments %}
+
+              <p class="comment" style="text-align: right; margin-right: 3%;
+              ">
+              Commenté le : <time datetime="{{ comment.createdAt|date('Y-m-d H:i:s') }}">
+                {{ comment.createdAt|date('d/m/Y \à H:i') }}
+              </time> par : {{ comment.getAuteur|upper }}
+              <br>
+                {{ comment.getCommentaire }}
+              </p>
+              {% endfor %}
+          </div>
         {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

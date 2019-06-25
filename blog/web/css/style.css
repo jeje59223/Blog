@@ -1,6 +1,45 @@
 h1 {
-  color: red;
+  color: 61BFB3;
+
 }
-div {
+.navigation {
   display: flex;
   justify-content: center;
+}
+.article {
+  border: 2px solid black;
+  border-radius: 30px;
+  margin-top: 3%;
+  margin-right: 60%;
+  margin-left: 1%;
+  text-align: center;
+}
+.formulaire {
+  display: flex;
+  justify-content: center;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding-bottom: 2%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+body {
+  background-color: #5D7068;
+}
+a {
+  color: #2CCED2;
+}
+.article_id {
+  border: 2px solid black;
+  border-radius: 30px;
+  margin-top: 3%;
+  margin-right: 60%;
+  margin-left: 1%;
+  text-align: center;
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+
+h2 {
+  color: #2CCED2;
+}

@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Formulaire commentaires{% endblock %}</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
@@ -14,25 +14,29 @@
         {% block body %}
         <nav class="navbar navbar-dark bg-dark">
           <a class="navbar-brand" href="{{ path ('accueil') }}">Accueil</a>
+          <a class="navbar-brand" href="{{ path ('list_articles') }}">Retour aux articles</a>
         </nav>
+        <br>
+        <h2 style="color: #2CCED2; text-align: center;">Veuillez saisir votre commentaire</h2>
+        <br>
+        <div class="formulaire">
 
-            {% for key,article in articles %}
-            <div class="article">
-
-                  <h1>{{ article.getTitre()| upper }}</h1>
-                  <td>{{ article.getContenu() }}</td>
-                  <br><br>
-                  <td>Auteur : {{ article.getAuteur() }}</td>
-
-                  <br><br>
-                <a href="{{ path('article_view_url', {'id':article.id} ) }}">Consulter l'article</a>
-
-            </div>
-            {% endfor %}
+          {{ form_start(form2) }}
             <br><br>
-            <div class="navigation">
-                {{ knp_pagination_render(articles) }}
-            </div>
+          {{ form_row(form2.auteur) }}
+            <br><br>
+          {{ form_row(form2.commentaire) }}
+            <br><br>
+          
+
+        <input type="submit" value="Enregistrer le commentaire" />
+        <br><br>
+          {{ form_end(form2) }}
+
+          </div>
+
+
+
         {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
